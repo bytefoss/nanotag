@@ -1,0 +1,19 @@
+# Build output — regenerate with west build + make_uf2.py
+build/
+
+# Credentials — NEVER commit. Every .uf2 embeds the anti-spoofing key in its
+# Fast Pair partition. Your model ID + key live in secrets.env (keep it local).
+secrets.env
+secrets/
+
+# Local identity override (impersonating a specific device stays out of the repo).
+local.conf
+*.uf2
+*.bin
+*.private.pem
+secrets.json
+
+.venv/
+__pycache__/
+*.log
+.DS_Store

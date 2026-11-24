@@ -1,0 +1,58 @@
+/*
+ * nice!nano v2 wiring for the locator tag DK UI.
+ * The sample expects 4 buttons and 4 LEDs; their order here is DK_BTN1..4 / DK_LED1..4.
+ * Buttons: momentary switch from the pin to GND. Only BTN1 is needed for discovery.
+ * LEDs: LED3 is the on-board blue LED (provisioning / Fast Pair advertising blink);
+ * the rest are optional external LEDs (pin -> resistor -> LED -> GND).
+ */
+
+#include <zephyr/dt-bindings/gpio/gpio.h>
+
+/ {
+	/delete-node/ leds;
+
+	leds {
+		compatible = "gpio-leds";
+		run_led: led_1 {
+			gpios = <&gpio1 15 GPIO_ACTIVE_HIGH>;
+			label = "Run status LED (external)";
+		};
+		ring_led: led_2 {
+			gpios = <&gpio1 13 GPIO_ACTIVE_HIGH>;
+			label = "Ring and motion LED (external)";
+		};
+		provisioning_led: led_3 {
+			gpios = <&gpio0 15 GPIO_ACTIVE_HIGH>;
+			label = "Provisioning LED (on-board blue)";
+		};
+		mode_led: led_4 {
+			gpios = <&gpio1 11 GPIO_ACTIVE_HIGH>;
+			label = "Mode LED (external)";
+		};
+	};
+
+	buttons {
+		compatible = "gpio-keys";
+		fp_adv_button: button_1 {
+			gpios = <&gpio0 17 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Fast Pair advertising mode";
+		};
+		ring_button: button_2 {
+			gpios = <&gpio0 20 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Stop ringing / motion";
+		};
+		battery_button: button_3 {
+			gpios = <&gpio0 22 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Battery level (emulated)";
+		};
+		mode_button: button_4 {
+			gpios = <&gpio0 24 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Recovery / ID mode, hold at boot = factory reset";
+		};
+	};
+
+	aliases {
+		led0 = &provisioning_led;
+		mcuboot-led0 = &provisioning_led;
+	};
+};

@@ -1,0 +1,35 @@
+# Flash layout matching the Adafruit UF2 bootloader on nice!nano (nrf52840_partition_uf2_sdv6.dtsi).
+# 0x00000-0x26000 is MBR/SoftDevice space the bootloader expects to stay untouched,
+# 0xF4000-0x100000 is the bootloader itself.
+# The UF2 bootloader (0.6.0) only accepts UF2 writes below USER_FLASH_END = 0xAD000, so everything the
+# UF2 file carries (app + Fast Pair Model ID/key) must end there. Settings are written by the firmware
+# at runtime, so they can sit in the bootloader's "app data" area above it.
+sd_reserved:
+  address: 0x0
+  region: flash_primary
+  size: 0x26000
+
+app:
+  address: 0x26000
+  region: flash_primary
+  size: 0x86000
+
+bt_fast_pair:
+  address: 0xac000
+  region: flash_primary
+  size: 0x1000
+
+unused_uf2_app_data:
+  address: 0xad000
+  region: flash_primary
+  size: 0x3f000
+
+settings_storage:
+  address: 0xec000
+  region: flash_primary
+  size: 0x8000
+
+uf2_bootloader:
+  address: 0xf4000
+  region: flash_primary
+  size: 0xc000

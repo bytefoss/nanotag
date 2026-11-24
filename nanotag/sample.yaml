@@ -1,0 +1,14 @@
+sample:
+  name: nanotag — Fast Pair locator tag (nice!nano)
+  description: Fast Pair Provider locator tag for nice!nano / Pro Micro nRF52840 (Adafruit UF2 bootloader)
+tests:
+  nanotag.fast_pair:
+    sysbuild: true
+    build_only: true
+    integration_platforms:
+      - promicro_nrf52840/nrf52840/uf2
+    platform_allow:
+      - promicro_nrf52840/nrf52840/uf2
+    tags:
+      - bluetooth
+      - sysbuild
